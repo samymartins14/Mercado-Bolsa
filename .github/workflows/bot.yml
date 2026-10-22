@@ -1,0 +1,26 @@
+name: Bot de Alertas de Mercado
+
+on:
+  schedule:
+    - cron: '0 22 * * *' # Corre todos os dias às 22:00 UTC (ajuste o horário se preferir)
+  workflow_dispatch: # Permite executar manualmente a partir do site do GitHub
+
+jobs:
+  executar-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Copiar código do repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar o Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Instalar bibliotecas necessárias
+        run: |
+          pip install yfinance requests pandas
+
+      - name: Executar o Bot
+        run: |
+          python bot.py
